@@ -1,0 +1,23 @@
+.tabla {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    grid-template-rows: repeat(8, 50px);
+  }
+
+  .tabla div {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+  }
+
+  .paros {
+    background-color: #f8e8d6;
+  }
+
+  .paratlan {
+    background-color: #381c0c;
+    color: #ffffff;
+  }
