@@ -16,5 +16,6 @@ for (let sor = 0; sor < tablaMeret; sor++) {
 
     // Cella tartalmának beállítása (pl. koordináták, bábuk)
     // Ezt a részt még ki kell egészíteni a konkrét sakktábla logikával
+    
   }
 }

@@ -2,6 +2,9 @@
     display: grid;
     grid-template-columns: repeat(8, 50px);
     grid-template-rows: repeat(8, 50px);
+    position: absolute;
+    left: 700px;
+    top: 250px;
   }
 
   .tabla div {
@@ -21,3 +24,8 @@
     background-color: #381c0c;
     color: #ffffff;
   }
+body{
+  background-color: burlywood;
+  background-image: linear-gradient(burlywood,brown);
+  
+}
