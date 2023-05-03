@@ -1,15 +1,16 @@
 .tabla {
     display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
+    grid-template-columns: repeat(8, 75px);
+    grid-template-rows: repeat(8, 75px);
     position: absolute;
-    left: 700px;
-    top: 250px;
+    left: 650px;
+    top: center;
+    
   }
 
   .tabla div {
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,8 +25,9 @@
     background-color: #381c0c;
     color: #ffffff;
   }
+  .szele{
+    border: solid green 5px;
+  }
 body{
-  background-color: burlywood;
-  background-image: linear-gradient(burlywood,brown);
-  
+  background-image: linear-gradient(to right, wheat , rosybrown);
 }
