@@ -1,33 +1,23 @@
 .tabla {
-    display: grid;
-    grid-template-columns: repeat(8, 75px);
-    grid-template-rows: repeat(8, 75px);
-    position: absolute;
-    left: 650px;
-    top: center;
-    
-  }
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+}
 
-  .tabla div {
-    width: 75px;
-    height: 75px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-  }
+.tabla div {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
 
-  .paros {
-    background-color: #f8e8d6;
-  }
+.paros {
+  background-color: #f8e8d6;
+}
 
-  .paratlan {
-    background-color: #381c0c;
-    color: #ffffff;
-  }
-  .szele{
-    border: solid green 5px;
-  }
-body{
-  background-image: linear-gradient(to right, wheat , rosybrown);
+.paratlan {
+  background-color: #381c0c;
+  color: #ffffff;
 }
