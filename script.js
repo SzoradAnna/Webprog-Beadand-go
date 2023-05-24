@@ -62,7 +62,7 @@ function vanBabu(sor, oszlop) {
         var vegCella = document.getElementById(sorVeg + ":" + oszlopVeg);
         var babu = kezdoCella.firstChild;
         
-    // Ellenőrzi, hogy a lépés érvényes-e (kint van-e a tábláról?)
+    // Ellenőrzi, hogy a lépés érvényes-e
         var sorKulonbseg = Math.abs(sorVeg - sorKezdo);
         var oszlopKulonbseg = Math.abs(oszlopVeg - oszlopKezdo);
         if (sorKulonbseg !== oszlopKulonbseg || sorKulonbseg === 0) {
@@ -72,7 +72,7 @@ function vanBabu(sor, oszlop) {
     
     var maxLepesek = sorKulonbseg;
     
-    // Ellenőrzi, hogy a bábu lépése szabályos-e (sorban vagy oszlopban akar lépni?)
+    // Ellenőrzi, hogy a bábu lépése szabályos-e
     for (var i = 1; i <= maxLepesek; i++) {
     var sor = sorKezdo + i * Math.sign(sorVeg - sorKezdo);
     var oszlop = oszlopKezdo + i * Math.sign(oszlopVeg - oszlopKezdo);
