@@ -1,122 +1,121 @@
 const tablaMeret = 10; // 8x8-as tábla
 const tabla = document.getElementById('tabla');
+var TablaMatrix = new Array();
 var cella;
-
+var Ertek =  Ertek = {szin: undefined, id: undefined};;
+var JoLepesek = new Array();
 
 function tablageneralas(){
-    for (let sor = 0; sor < tablaMeret; sor++) {
-        for (let oszlop = 0; oszlop < tablaMeret; oszlop++) {
-            cella = document.createElement('div');
-            tabla.appendChild(cella);
-            cella.id=sor+":"+oszlop;
+    for (let sor = 0; sor < tablaMeret; sor++){
+        let SorDiv = document.createElement("div");
+        SorDiv.id = "SorDiv"+sor;
+        SorDiv.classList = "SorDiv";
+        for (let oszlop = 0; oszlop < tablaMeret; oszlop++){
+            let CellaDiv = document.createElement('div');
+            CellaDiv.id=sor+":"+oszlop;
+            CellaDiv.classList = "BelsoDivek";
             if ((sor + oszlop) % 2 == 0) {
-                cella.classList.add('paros');
-                
-              } else {
-                cella.classList.add('paratlan');
-                
-              }
+                CellaDiv.classList += " paros";
+            }
+            else{
+            CellaDiv.classList += " paratlan";
+            }
+            SorDiv.appendChild(CellaDiv);
         }
-
+        tabla.appendChild(SorDiv);
     }
+    let gomb = document.createElement("input");
+    gomb.type = "button";
+    gomb.value = "Indítás";
+    gomb.id = "InditoGomb";
+    document.body.appendChild(gomb);
+    babukgeneralasa();
+}
+
+function KepGen(div, szin, id){
+    var img = document.createElement("img");
+    img.src = szin+".png";
+    img.classList.add(szin);
+    img.dataset.id = id
+    img.style.cursor = "pointer";
+    img.style.width = "100%";
+    img.setAttribute("onclick","ErtekEltarolas(this)");
+    div.appendChild(img);
 }
 
 function babukgeneralasa(){
-    for (let i = 0; i < 10; i++) {
-        for (let j = 0; j < 10; j++) {
-            cella=document.getElementById(i+":"+j);
-            if ((i == 0 || i == 1  || i == 2) && cella.classList.contains("paros")) {
-
-                
-                var img = document.createElement("img");
-                img.src = "feher.png";
-                img.style.height= "50px";
-                img.style.width="50px";
-                cella.appendChild(img);
-                img.classList.add("feher");
-            }
-            else if((i == 7 || i == 8 || i == 9) && cella.classList.contains("paros")) {
-                
-                var img = document.createElement("img");
-                img.src = "fekete.png";
-                img.style.height= "50px";
-                img.style.width="50px";
-                cella.appendChild(img);
-                img.classList.add("fekete");
-            } 
-            
-        }
+    let ParosClass = document.getElementsByClassName("paros");
+    for(let i = 0; i < 15;i++){
+        KepGen(ParosClass[i], "feher", ParosClass[i].id);
+    }
+    for(let i = ParosClass.length-1; i > ParosClass.length-16;i--){
+        KepGen(ParosClass[i], "fekete", ParosClass[i].id);
     }
 }
 
-
-// Ellenőrzi, hogy a mezőn van-e bábu
-function vanBabu(sor, oszlop) {
-    var cella = document.getElementById(sor + ":" + oszlop);
-    return cella.childElementCount > 0;
+function ErtekEltarolas(div){
+    if(JoLepesek.length != 0){
+        for(let i = 0; i < JoLepesek.length;i++){
+            let div = document.getElementById(JoLepesek[i]);
+            div.removeAttribute("onclick"); 
+            div.style.cursor = "default"
+            div.removeChild(div.firstChild);
+        }
+        document.getElementById(Ertek.id).firstChild.classList = document.getElementById(Ertek.id).firstChild.classList.value.split(" ")[0];
     }
-    
-    // Lépés végrehajtása
-    function lep(sorKezdo, oszlopKezdo, sorVeg, oszlopVeg) {
-        var kezdoCella = document.getElementById(sorKezdo + ":" + oszlopKezdo);
-        var vegCella = document.getElementById(sorVeg + ":" + oszlopVeg);
-        var babu = kezdoCella.firstChild;
-        
-    // Ellenőrzi, hogy a lépés érvényes-e
-        var sorKulonbseg = Math.abs(sorVeg - sorKezdo);
-        var oszlopKulonbseg = Math.abs(oszlopVeg - oszlopKezdo);
-        if (sorKulonbseg !== oszlopKulonbseg || sorKulonbseg === 0) {
-        console.log("Érvénytelen lépés!");
-        return;
+    Ertek = {szin: div.classList.value, id: div.dataset.id};
+    div.classList += " BabuKivalasztva";
+    JoLepesek = new Array();
+    lep(Number(div.dataset.id.split(":")[0]), Number(div.dataset.id.split(":")[1]));
+    for(let i = 0; i < JoLepesek.length;i++){
+        let div = document.getElementById(JoLepesek[i]);
+        div.setAttribute("onclick","LepesKattintas(this)");
+        div.style.cursor = "pointer";
+        let BDiv = document.createElement("div");
+        BDiv.classList = "JoLepes";
+        div.appendChild(BDiv);
     }
-    
-    var maxLepesek = sorKulonbseg;
-    
-    // Ellenőrzi, hogy a bábu lépése szabályos-e
-    for (var i = 1; i <= maxLepesek; i++) {
-    var sor = sorKezdo + i * Math.sign(sorVeg - sorKezdo);
-    var oszlop = oszlopKezdo + i * Math.sign(oszlopVeg - oszlopKezdo);
+}
 
-    if (vanBabu(sor, oszlop)) {
-      console.log("Érvénytelen lépés!");
-      return;
+function lep(sor, oszlop) {
+    let korbejaras = [[-1,-1],[-1,+1],[+1,-1],[+1,+1]];
+    for(let i = 0; i < korbejaras.length;i++){
+        KorbeJaras(sor,oszlop,korbejaras[i]);
+    }
+}
+
+function KorbeJaras(sor,oszlop,index){
+    let div = document.getElementById((sor+index[0])+":"+(oszlop+index[1]));
+    if(div != undefined){
+        if(div.firstChild == undefined && !JoLepesek.includes(div.id)){
+            JoLepesek.push(div.id);
+        }
+        KorbeJaras((sor+index[0]),(oszlop+index[1]),index);
+    }
+    else{
+        return "vége";
+    }
+}
+
+function LepesKattintas(div){
+    let Honnan = document.getElementById(Ertek.id);
+    div.removeAttribute("onclick");
+    Honnan.firstChild.dataset.id = div.id;
+    div.removeChild(div.firstChild);
+    div.appendChild(Honnan.firstChild);
+    div.firstChild.classList = div.firstChild.classList.value.split(" ")[0];
+    for(let i = 0; i < JoLepesek.length;i++){
+        if(JoLepesek[i] != div.id){
+            let div = document.getElementById(JoLepesek[i]);
+            div.removeAttribute("onclick"); 
+            div.style.cursor = "default"
+            div.removeChild(div.firstChild);
         }
     }
-    
-    // Bábuk mozgatása
-    vegCella.appendChild(babu);
-    //kezdoCella.removeChild(babu);
-    }
-    
-    // Lépésre kattintás eseménykezelő
-    function kezelLepesKattintas(sor, oszlop) {
-        var kivalasztottCella = document.querySelector(".kivalasztott");
-        if (kivalasztottCella) {
-            var kivalasztottSor = parseInt(kivalasztottCella.id.split(":")[0]);
-            var kivalasztottOszlop = parseInt(kivalasztottCella.id.split(":")[1]);
-            lep(kivalasztottSor, kivalasztottOszlop, sor, oszlop);
-            kivalasztottCella.classList.remove("kivalasztott");
-        } else {
-            var cella = document.getElementById(sor + ":" + oszlop);
-            if (cella.childElementCount > 0) {
-            cella.classList.add("kivalasztott");
-            }
-        }
-    }
-    
-    // Eseménykezelők hozzáadása a cellákhoz
-    function esemenyKezeloHozzaadasa() {
-        var cellak = document.querySelectorAll("#tabla > div");
-        cellak.forEach(function(cella) {
-            var sor = parseInt(cella.id.split(":")[0]);
-            var oszlop = parseInt(cella.id.split(":")[1]);
-            cella.addEventListener("click", function() {
-                kezelLepesKattintas(sor, oszlop);
-            });
-        });
-    }
-      
-  // Az összes függvény meghívása a tábla és bábuk generálása után
-  tablageneralas();
-  babukgeneralasa();
-  esemenyKezeloHozzaadasa();
+    JoLepesek = new Array();
+}
+
+function Main(){
+    tablageneralas();
+}
+Main();
