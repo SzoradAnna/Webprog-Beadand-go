@@ -1,16 +1,44 @@
-.tabla {
-  display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
+body{
+  background-color: #a08679;
+  overflow: hidden;
 }
 
-.tabla div {
-  width: 50px;
-  height: 50px;
+#tabla {
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  border: 2px solid black;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.SorDiv{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+  width: auto;
+  height: auto;
+  display: flex;
+}
+.BelsoDivek{
+  height: 4.5vw;
+  width: 4.5vw;
+}
+
+#InditoGomb{
+  margin: .5vw auto;
+  display: block;
+  border: 2px solid rgb(167, 71, 42);
+  width: 10vw;
+  height: 3vw;
+  background-color: #381c0c;
+  color: #f8e8d6;
+  font-family: 'CASTELLAR';
+  border-radius: 10px;
+  transition: .7s;
+  cursor: pointer;
+}
+#InditoGomb:hover{
+  background-color: rgb(43, 43, 43);
+  border-radius: 5px;
 }
 
 .paros {
@@ -20,4 +48,36 @@
 .paratlan {
   background-color: #381c0c;
   color: #ffffff;
+}
+
+.BabuKivalasztva{
+  box-shadow: 0 0 20px 5px green inset;
+  transition: .7s;
+  animation-name: Pulsal;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.JoLepes{
+  height: 1.5vw;
+  width: 1.5vw;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1.2vw;
+  animation-name: Pulsal2;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes Pulsal{
+  0% { box-shadow: 0 0 10px 2px green inset;}
+  50% {box-shadow: 0 0 20px 5px green inset;}
+  100% { box-shadow: 0 0 10px 2px green inset;}
+}
+
+@keyframes Pulsal2{
+  0% { box-shadow: 0 0 15px 2px rgb(43, 11, 1) inset, 0 0 20px 5px rgb(43, 11, 1);}
+  50% {box-shadow: 0 0 25px 2px rgb(43, 11, 1) inset, 0 0 20px 5px rgb(43, 11, 1);}
+  100% { box-shadow: 0 0 15px 2px rgb(43, 11, 1) inset, 0 0 20px 5px rgb(43, 11, 1);}
 }
