@@ -6,6 +6,8 @@ var Ertek =  Ertek = {szin: undefined, id: undefined};;
 var JoLepesek = new Array();
 var Atugrott = undefined;
 var Rakattintva = new Array();
+var feherdama = [[7,0], [7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8], [7,9]];
+var feketedama = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],]
 
 function tablageneralas(){
     for (let sor = 0; sor < tablaMeret; sor++){
@@ -44,7 +46,9 @@ function KepGen(div, szin, id){
     img.style.width = "100%";
     img.setAttribute("onclick","ErtekEltarolas(this)");
     div.appendChild(img);
+    
 }
+
 
 function babukgeneralasa(){
     let ParosClass = document.getElementsByClassName("paros");
@@ -54,8 +58,8 @@ function babukgeneralasa(){
     for(let i = ParosClass.length-1; i > ParosClass.length-13;i--){
         KepGen(ParosClass[i], "fekete", ParosClass[i].id);
     }
+    
 }
-
 function ErtekEltarolas(div){
     if(JoLepesek.length != 0){
         for(let i = 0; i < JoLepesek.length;i++){
@@ -165,7 +169,36 @@ function LepesKattintas(div){
     JoLepesek = new Array();
 }
 
+function Dama(){
+    for (let i = 0; i < feherdama.length; i++) {
+        for (let j = 0; j < feketedama.length; j++) {
+            
+            if (cella.id == feherdama[i] || cella.id == feketedama[j]) {
+                let korbejaras = [[-1,-1],[-1,+1],[+1,-1],[+1,+1]];
+                for(let i = 0; i < korbejaras.length;i++){
+                    DamaKorbe(sor,oszlop,korbejaras[i]);
+                }
+            }
+        }
+        
+    }
+}
+
+function DamaKorbe(sor,oszlop,index){
+    let div = document.getElementById((sor+index[0])+":"+(oszlop+index[1]));
+    if(div != undefined){
+        if(div.firstChild == undefined && !JoLepesek.includes(div.id)){
+            JoLepesek.push(div.id);
+        }
+        KorbeJaras((sor+index[0]),(oszlop+index[1]),index);
+    }
+    else{
+        return "vége";
+    }
+}
+
 function Main(){
     tablageneralas();
+    
 }
 Main();
